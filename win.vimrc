@@ -1,42 +1,10 @@
-
-
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
-
-" sets the directory for the swap files
-set directory=$HOME/vimfiles/swapfiles//
-
-" source in windows stuff for cut and paste
-source $VIMRUNTIME/mswin.vim
-
-" set the color scheme
-set background=dark
-syntax enable
-colorscheme monokai
-
-let delimitMate_expand_space = 1
-let delimitMate_expand_cr = 1
-
-set smartcase
-set ignorecase
-
-set tags=./tags,tags;~/.vimtags
-let mapleader=","
-" Ctrlp stups
-let g:ctrlp_by_filename = 1
-
 """"""""""""""""""""""""""""""""""""""
 "" Vundle stuff
 filetype off                  " required
 
+"set rtp+=~/vimfiles/bundle/Vundle.vim
 set rtp+=~/vimfiles/bundle/Vundle.vim
-call vundle#begin()
+call vundle#begin('~/vimfiles/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -50,6 +18,8 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'danro/rename.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/TaskList.vim'
+Plugin 'craigemery/vim-autotag'
 
 "
 " Brief help
@@ -63,13 +33,51 @@ Plugin 'Valloric/YouCompleteMe'
 
 "" End vundle stuff
 """""""""""""""""""""""""""""""""""""""""""""""""""
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+let g:ycm_path_to_python_interpreter = 'c:\Python27\python.exe'
+
+" When started as "evim", evim.vim will already have done these settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+set guifont=Consolas
+" sets the directory for the swap files
+set directory=$HOME/vimfiles/swapfiles//
+set backupdir=$HOME/vimfiles/backup//
+
+" source in windows stuff for cut and paste
+source $VIMRUNTIME/mswin.vim
+
+" set the color scheme
+syntax enable
+colorscheme monokai
+set background=dark
+
+let delimitMate_expand_space = 1
+let delimitMate_expand_cr = 1
+
+set smartcase
+set ignorecase
+
+set tags=./tags,tags;~/.vimtags
+let mapleader=","
+" Ctrlp stups
+let g:ctrlp_by_filename = 1
 
 " Here is where we make the medicine.
 nnoremap ; :
 nnoremap q; q:
 nnoremap <silent> <F9> :TagbarOpen fj<CR>
 nnoremap <silent> <F3> :ts<CR>
-nnoremap <silent> <leader>m :make -C build<CR>
+nnoremap <silent> <leader>m :!"misc\build.bat"<CR>
+"nnoremap <silent> <leader>m :make -C build<CR>
 vnoremap // y/<C-R>"<CR>
 nnoremap <C-H> <C-W>h
 nnoremap <C-J> <C-W>j
@@ -81,6 +89,7 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 syntax enable
+set nowrap
 set tabstop=3
 set shiftwidth=3
 imap jk <C-Esc>
